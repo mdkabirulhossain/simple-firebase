@@ -10,6 +10,7 @@ import {
 
 import Main from './layout/Main.jsx';
 import Home from './components/Home/Home.jsx';
+import Login from './components/Login/Login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/", 
         element:<Home></Home>
+      },
+      {
+        path: '/login',
+        element: <Login></Login>
       }
     ]
   },
@@ -29,4 +34,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RouterProvider router={router} />
   </React.StrictMode>,
 )
+//update
 
