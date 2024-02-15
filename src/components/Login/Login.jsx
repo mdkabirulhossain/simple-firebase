@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 import app from '../../firebase/firebase.init';
 
 const Login = () => {
     const [user, setUser]= useState(null);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
     const handleGoogleSignIn = () =>{
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
         .then(result => {
             const LoggedInUser = result.user;
             console.log(LoggedInUser);
@@ -15,6 +17,17 @@ const Login = () => {
         })
         .catch(error =>{
             console.log('error: ', error.message);
+        })
+    }
+    const handleGithubSignIn =() =>{
+        signInWithPopup(auth, githubProvider)
+        .then(result =>{
+            const LoggedInUser = result.user;
+            console.log(LoggedInUser);
+            setUser(LoggedInUser);
+        })
+        .then(error =>{
+            console.log('error: ', error);
         })
     }
     const handleGoogleSignOut= ()=>{
@@ -27,6 +40,7 @@ const Login = () => {
             console.log(error);
         })
     }
+   
     return (
         <div>
            
@@ -35,7 +49,11 @@ const Login = () => {
             {
                  user?
                 <button onClick={handleGoogleSignOut}>Google SignOut</button> : 
+                <>
+                {/* Ternary Operator return one property thats why we create a div inside div we write many things no problem */}
                 <button onClick={handleGoogleSignIn}>Google login</button>
+                <button onClick={handleGithubSignIn}>Github login</button>
+                </>
             }
 
            {
